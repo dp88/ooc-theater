@@ -1,0 +1,4 @@
+Name: theater
+Description: A simplistic, undocumented library for managing sprites and scenes in SDL.
+Requires: sdl2
+SourcePath: source
