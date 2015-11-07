@@ -122,7 +122,9 @@ Actor: class {
     SDL renderCopy(Theater renderer, texture, sourceRect&, destination&)
 
     if (childActors getSize() > 0) {
-      childActors each(|child| child render(0, 0) )
+      newOffsetX := x + ox
+      newOffsetY := y + oy
+      childActors each(|child| child render(newOffsetX, newOffsetY) )
     }
   }
 

@@ -65,7 +65,7 @@ MyScene: class extends Actor {
     sampleFont = SpriteFont new(sampleTexture, 8, 0, 32, 16, fontChars)
 
     sampleText := sampleFont getText("Sample sprite text!", 16, 128, 240)
-    this addChildren(sampleText)
+    this addChild(sampleText)
 
     titleRect: SdlRect
     titleRect x = 0

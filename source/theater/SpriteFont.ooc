@@ -29,8 +29,8 @@ SpriteFont: class {
     }
   }
 
-  getText: func (text: String, size, x, y: Int) -> ArrayList<Actor> {
-    actors := ArrayList<Actor> new()
+  getText: func (text: String, size, x, y: Int) -> Actor {
+    actorText := Actor new()
     len := text size
 
     for (i in 0..len) {
@@ -41,9 +41,9 @@ SpriteFont: class {
       spriteChar buildFromTexture(texture, rect, size, size)
       spriteChar x = lx
       spriteChar y = y
-      actors add(spriteChar)
+      actorText addChild(spriteChar)
     }
 
-    return actors
+    return actorText
   }
 }
