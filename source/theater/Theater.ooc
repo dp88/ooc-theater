@@ -1,15 +1,15 @@
 use sdl2
 import sdl2/[Core, Image]
-import [Actor, Scene]
+import Actor
 
 Theater: class {
   window: static SdlWindow
   renderer: static SdlRenderer
-  scene: Scene
+  scene: static Actor
 
   pixelMod: static Int = 1
 
-  init: func (title: String, width, height: Int) {
+  init: static func (title: String, width, height: Int) {
     SDL init(SDL_INIT_EVERYTHING)
 
     window = SDL createWindow(title,
@@ -18,10 +18,6 @@ Theater: class {
 
     renderer = SDL createRenderer(window, -1,
       SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC)
-  }
-
-  render: func () {
-    scene render()
   }
 
   getTextureFromImage: static func (filename: String) -> SdlTexture {

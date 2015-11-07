@@ -37,7 +37,8 @@ SpriteFont: class {
       spriteChar: Actor
       rect := keymap get(text[i])
       lx := x + (i * size)
-      spriteChar = Actor new(texture, rect, size, size)
+      spriteChar = Actor new()
+      spriteChar buildFromTexture(texture, rect, size, size)
       spriteChar x = lx
       spriteChar y = y
       actors add(spriteChar)

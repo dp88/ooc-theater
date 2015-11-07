@@ -7,15 +7,11 @@ import structs/ArrayList
 
 Scene: class {
   actors: ArrayList<Actor>
-  camera: SdlRect
   localUpdate: Func(Int)
   localRender: Func
 
   init: func () {
     actors = ArrayList<Actor> new()
-    camera x = 0
-    camera y = 0
-
     localUpdate = func (deltaTime: Int) {}
     localRender = func () {}
   }
@@ -42,9 +38,6 @@ Scene: class {
 
   render: func () {
     localRender()
-
-    actors each(|actor|
-      actor render(camera)
-    )
+    actors each(|actor| actor render(0, 0) )
   }
 }

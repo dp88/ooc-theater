@@ -1,6 +1,7 @@
 use sdl2
 import sdl2/[Core]
 import Theater
+import structs/ArrayList
 
 Actor: class {
   texture: SdlTexture
@@ -11,14 +12,17 @@ Actor: class {
   zIndex: Int = 0
   transparency: Float = 1.0
   anchor: String = ""
-  shouldScale: Bool = false
   scale: Float = 1.0
-  update: Func(Int)
+  updateMethod: Func(Int)
   click: Func
+  childActors: ArrayList<Actor*>
 
-  init: func (=texture, =sourceRect, =width, =height) {
-    update = func (deltaTime: Int) {}
+  init: func () {
+    updateMethod = func (deltaTime: Int) {}
+    childActors = ArrayList<Actor*> new()
   }
+
+  buildFromTexture: func (=texture, =sourceRect, =width, =height)
 
   getRealSize: func () -> (Int, Int) {
     width, height: Int
@@ -83,7 +87,7 @@ Actor: class {
     return (rx, ry)
   }
 
-  render: func (camera: SdlRect) {
+  render: func (ox, oy: Int) {
     destination: SdlRect
 
     (x, y) := getRealLocation()
@@ -103,8 +107,8 @@ Actor: class {
       destination x = x
       destination y = y
     } else {
-      destination x = x - camera x
-      destination y = y - camera y
+      destination x = x + ox
+      destination y = y + oy
     }
 
     if (transparency > 1.0) {
@@ -116,6 +120,18 @@ Actor: class {
 
     SDL setTextureAlphaMod(texture, transparency * 255)
     SDL renderCopy(Theater renderer, texture, sourceRect&, destination&)
+
+    if (childActors getSize() > 0) {
+      childActors each(|child| child render(0, 0) )
+    }
+  }
+
+  update: func (deltaTime: Int) {
+    updateMethod(deltaTime)
+
+    if (childActors getSize() > 0) {
+      childActors each(|child| child update(deltaTime) )
+    }
   }
 
   checkInBounds: func (x, y: Int) -> Bool {
@@ -131,5 +147,13 @@ Actor: class {
     }
 
     return false
+  }
+
+  addChild: func (child: Actor) {
+    childActors add(child)
+  }
+
+  addChildren: func (children: ArrayList<Actor>) {
+    childActors addAll(children)
   }
 }

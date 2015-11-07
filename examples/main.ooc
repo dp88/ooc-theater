@@ -1,11 +1,11 @@
 use sdl2
 use theater
 import sdl2/[Core, Event]
-import theater/[Theater, Scene, Actor, SpriteFont]
+import theater/[Theater, Actor, SpriteFont]
 
 main: func (argc: Int, argv: CString*) {
-  theater := Theater new("OOC Theater", 640, 480)
-  theater scene = MyScene new()
+  Theater init("OOC Theater", 640, 480)
+  Theater scene = MyScene new()
 
   nextFrame := SDL getTicks()
   oldTime := 0
@@ -29,16 +29,16 @@ main: func (argc: Int, argv: CString*) {
       }
     }
 
-    SDL getWindowSize(theater window, rect w&, rect h&)
+    SDL getWindowSize(Theater window, rect w&, rect h&)
 
-    SDL renderClear(theater renderer)
-    SDL setRenderDrawColor(theater renderer, 0, 0, 0, 255)
-    SDL renderFillRect(theater renderer, rect&)
+    SDL renderClear(Theater renderer)
+    SDL setRenderDrawColor(Theater renderer, 0, 0, 0, 255)
+    SDL renderFillRect(Theater renderer, rect&)
 
-    theater scene render()
-    theater scene update(deltaTime)
+    Theater scene render(0, 0)
+    Theater scene update(deltaTime)
 
-    SDL renderPresent(theater renderer)
+    SDL renderPresent(Theater renderer)
 
     nextFrame += 16
     delay := nextFrame - SDL getTicks()
@@ -48,12 +48,12 @@ main: func (argc: Int, argv: CString*) {
     }
   }
 
-  SDL destroyRenderer(theater renderer)
-  SDL destroyWindow(theater window)
+  SDL destroyRenderer(Theater renderer)
+  SDL destroyWindow(Theater window)
   SDL quit()
 }
 
-MyScene: class extends Scene {
+MyScene: class extends Actor {
   sampleTexture: SdlTexture
   sampleFont: SpriteFont
 
@@ -65,18 +65,19 @@ MyScene: class extends Scene {
     sampleFont = SpriteFont new(sampleTexture, 8, 0, 32, 16, fontChars)
 
     sampleText := sampleFont getText("Sample sprite text!", 16, 128, 240)
-    this addActors(sampleText)
+    this addChildren(sampleText)
 
     titleRect: SdlRect
     titleRect x = 0
     titleRect y = 0
     titleRect w = 176
     titleRect h = 32
-    title := Actor new(sampleTexture, titleRect, 352, 64)
+    title := Actor new()
+    title buildFromTexture(sampleTexture, titleRect, 352, 64)
     title x = -176
     title y = 24
     title anchor = "n"
 
-    this addActor(title)
+    this addChild(title)
   }
 }
