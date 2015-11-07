@@ -31,7 +31,7 @@ Theater: class {
       exit(1)
     }
     texture := SDL createTextureFromSurface(renderer, image)
-  	SDL freeSurface(image)
-  	return texture
+    SDL freeSurface(image)
+    return texture
   }
 }
