@@ -5,13 +5,11 @@ import structs/[ArrayList, HashMap]
 
 SpriteFont: class {
   texture: SdlTexture
-  x, y: Int
   keymap: HashMap<Char, SdlRect>
 
-  init: func (texture: SdlTexture, size, x, y, columns: Int, chars: String) {
-    this texture = texture
+  init: func (=texture, size, x, y, columns: Int, chars: String) {
     keymap = HashMap<Char, SdlRect> new()
-    len := chars size - 1
+    len := chars size
 
     for (i in 0..len) {
       rect: SdlRect
@@ -33,7 +31,7 @@ SpriteFont: class {
 
   getText: func (text: String, size, x, y: Int) -> ArrayList<Actor> {
     actors := ArrayList<Actor> new()
-    len := text size - 1
+    len := text size
 
     for (i in 0..len) {
       spriteChar: Actor

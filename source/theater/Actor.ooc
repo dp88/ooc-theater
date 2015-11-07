@@ -16,11 +16,7 @@ Actor: class {
 	update: Func(Int)
 	click: Func
 
-	init: func (t: SdlTexture, src: SdlRect, w, h: Int) {
-		texture = t
-		sourceRect = src
-		width = w
-		height = h
+	init: func (=texture, =sourceRect, =width, =height) {
 		update = func (deltaTime: Int) {}
 	}
 
