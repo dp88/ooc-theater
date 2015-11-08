@@ -32,7 +32,7 @@ main: func (argc: Int, argv: CString*) {
     SDL getWindowSize(Theater window, rect w&, rect h&)
 
     SDL renderClear(Theater renderer)
-    SDL setRenderDrawColor(Theater renderer, 0, 0, 0, 255)
+    SDL setRenderDrawColor(Theater renderer, 128, 128, 128, 255)
     SDL renderFillRect(Theater renderer, rect&)
 
     Theater scene render(0, 0)
@@ -74,7 +74,7 @@ MyScene: class extends Actor {
     titleRect h = 32
     title := Actor new()
     title buildFromTexture(sampleTexture, titleRect, 352, 64)
-    title x = -176
+    title x = 0
     title y = 24
     title anchor = "n"
 

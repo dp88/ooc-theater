@@ -30,6 +30,9 @@ Actor: class {
     if (scale != 1.0) {
       width = width * scale
       height = height * scale
+    } else {
+      width = this width
+      height = this height
     }
 
     return (width, height)
@@ -38,50 +41,50 @@ Actor: class {
   getRealLocation: func () -> (Int, Int) {
     rx := x
     ry := y
-    winW, winH: Int
-    halfWW, halfWH: Int
-    halfRW, halfRH: Int
-    SDL getWindowSize(Theater window, winW&, winH&)
-    halfWW = winW / 2
-    halfWH = winH / 2
+    windowWidth, windowHeight: Int
+    SDL getWindowSize(Theater window, windowWidth&, windowHeight&)
 
     (w, h) := getRealSize()
-    halfRW = w / 2
-    halfRH = h / 2
 
-    match (anchor) {
-      case "center" =>
-        rectX := halfWW - halfRW
-        rectY := halfWH = halfRH
-        rx += rectX
-        ry += rectY
-      case "n" =>
-        rectX := halfWW - halfRW
-        rx += rectX
-      case "ne" =>
-        rightX := winW - w
-        rx += rightX
-      case "w" =>
-        rectY := halfWH - halfRH
-        ry += rectY
-      case "e" =>
-        rectY := halfWH - halfRH
-        rightX := winW - w
-        rx += rightX
-        ry += rectY
-      case "sw" =>
-        lowY := winH - h
-        ry += lowY
-      case "s" =>
-        rectX := halfWW - halfRW
-        lowY := winH - h
-        rx += rectX
-        ry += lowY
-      case "se" =>
-        rightX := winW - w
-        lowY := winH - h
-        rx += rightX
-        ry += lowY
+    if (anchor == "center") {
+      rectX := (windowWidth / 2) - (w / 2)
+      rectY := (windowHeight / 2) - (h / 2)
+      rx += rectX
+      ry += rectY
+    }
+    if (anchor == "n") {
+      rectX := (windowWidth / 2) - (w / 2)
+      rx += rectX
+    }
+    if (anchor == "ne") {
+      rightX := windowWidth - w
+      rx += rightX
+    }
+    if (anchor == "w") {
+      rectY := (windowHeight / 2) - (h / 2)
+      ry += rectY
+    }
+    if (anchor == "e") {
+      rectY := (windowHeight / 2) - (h / 2)
+      rightX := windowWidth - w
+      rx += rightX
+      ry += rectY
+    }
+    if (anchor == "sw") {
+      lowY := windowHeight - h
+      ry += lowY
+    }
+    if (anchor == "s") {
+      rectX := (windowWidth / 2) - (w / 2)
+      lowY := windowHeight - h
+      rx += rectX
+      ry += lowY
+    }
+    if (anchor == "se") {
+      rightX := windowWidth - w
+      lowY := windowHeight - h
+      rx += rightX
+      ry += lowY
     }
 
     return (rx, ry)
